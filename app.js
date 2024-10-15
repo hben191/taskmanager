@@ -40,12 +40,9 @@ app.use(function(err, req, res, next) {
 
 const mongoose = require('mongoose');
 
-// MongoDB connection URI (use your connection string here)
-const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/mydatabase';
-
-// Connect to MongoDB
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB connected!'))
   .catch(err => console.error('MongoDB connection error:', err));
+
 
 module.exports = app;
