@@ -11,6 +11,8 @@ services:
       - MONGO_URI=mongodb://mongo:27017/mydatabase  # MongoDB connection string
     depends_on:
       - mongo
+    volumes:
+      - ./:/app
 
   mongo:
     image: mongo:latest  # Use the latest MongoDB image
@@ -18,6 +20,17 @@ services:
       - "27017:27017"  # Expose MongoDB port
     volumes:
       - mongo-data:/data/db  # Use a volume to persist data
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    ports:
+      - "8081:8081"  # Expose Mongo-express on port 8081
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo  # MongoDB server name
+      - ME_CONFIG_MONGODB_PORT=27017      # MongoDB port
+      - ME_CONFIG_BASICAUTH_USERNAME=admin # Optional: Set a username for basic auth
+      - ME_CONFIG_BASICAUTH_PASSWORD=pass  # Optional: Set a password for basic auth
 
 volumes:
   mongo-data:
